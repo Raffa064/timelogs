@@ -144,11 +144,16 @@
             color: #777;
         }
 
-        .activity-stop-register {
+        .activity-stop-register, .activity-delete-register {
+            min-width: 40px;
             padding: 3px;
             background: #FFE0E0;
             border: 1px solid #FF4848;
             border-radius: 5px;
+        }
+        
+        .activity-stop-register + .activity-delete-register {
+            display: none;
         }
     </style>
 </head>
@@ -237,7 +242,7 @@
             }
 
             for (let i in activityData.registers) {
-                const r = createRegister(activityData.registers[i])
+                const r = createRegister(activityData.registers, activityData.registers[i])
                 addRegister(r)
             }
 
@@ -274,14 +279,14 @@
                 activityData.registers.push(register)
 
                 
-                const r = createRegister(register)
+                const r = createRegister(activityData.registers, register)
                 addRegister(r)
             }
             
             return activity
         }
 
-        function createRegister(register) {
+        function createRegister(registers, register) {
             const listItem = document.createElement('li')
             const activityRegisterTime = document.createElement('span')
             activityRegisterTime.classList.add('activity-register-time')
@@ -291,7 +296,7 @@
             activityRegisterDate.classList.add('activity-register-date')
             activityRegisterDate.innerText = ddmmyy(register.start)
             listItem.appendChild(activityRegisterDate)
-
+            
             if (register.end == null) {
                 const activityStopRegister = document.createElement('button')
                 activityStopRegister.classList.add('activity-stop-register')
@@ -300,7 +305,8 @@
 
                 activityStopRegister.onclick = () => {
                     listItem.removeChild(activityStopRegister)
-                    register.end = Date.now();
+                    register.end = Date.now()
+                    save()
                 }
 
                 updateHandlers.push(() => {
@@ -309,6 +315,27 @@
                 })
             } else {
                 activityRegisterTime.innerText = register.end - register.start
+            }
+            
+            const activityDeleteRegister = document.createElement('button')
+            activityDeleteRegister.classList.add('activity-delete-register')
+            activityDeleteRegister.innerText = "×"
+            listItem.appendChild(activityDeleteRegister)
+            
+            var clicks = 3
+            activityDeleteRegister.onclick = () => {
+                clicks--;
+                activityDeleteRegister.innerText = clicks
+                
+                if (clicks <= 0) {
+                    registers.splice(registers.indexOf(register), 1)
+                    listItem.parentNode.removeChild(listItem)
+                    save();
+                }
+                setTimeout(()=> {
+                    clicks = 3
+                    activityDeleteRegister.innerText = '×'
+                }, 400)
             }
 
             return listItem
