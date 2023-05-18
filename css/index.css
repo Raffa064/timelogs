@@ -1,0 +1,151 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font-family: Arial, Helvetica, sans-serif;
+    -ms-touch-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+    transition: .2s;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    min-height: 100vh;
+    padding: 10px;
+    background-color: var(--backgroundDark);
+}
+
+main {
+    width: min(600px, 100%);
+}
+
+.action-bar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.action-bar :nth-child(-n+1) {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.action-bar :nth-last-child(-n+1) {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.action-bar input {
+    align-self: flex-start;
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #777;
+}
+
+.action-bar button {
+    width: 70px;
+    height: 40px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #0088ff;
+    color: #C6E5FF;
+    /*border-radius: 5px;*/
+    transition: .2s;
+}
+
+.action-bar button:hover {
+    background: #5FB4FF;
+}
+
+.activity {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #666;
+    border-radius: 10px;
+}
+
+.activity+.activity {
+    margin-top: 10px;
+}
+
+.activity div {
+    color: #08f;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.activity-start-btn {
+    display: block;
+    padding: 3px;
+    color: #6FBA1A;
+    background: #E7FFCC;
+    border: 1px solid #6FBA1A;
+    border-radius: 5px;
+    transition: .2s;
+}
+
+.activity-start-btn:hover {
+    background: #F1FFE1;
+}
+
+.activity-start-btn.disabled {
+    filter: saturate(0%);
+}
+
+.activity-title {
+    color: #333;
+    font-size: 1.2rem;
+}
+
+.activity-registers {
+    min-height: 50px;
+    list-style: none;
+    border: 1px solid #666;
+    border-radius: 10px;
+}
+
+.activity-registers li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.activity-register-time {
+    min-width: 50px;
+    text-align: center;
+    padding: 3px;
+    background: #C6E3FF;
+    color: #0088FF;
+    border: 1px solid #08f;
+    border-radius: 5px;
+}
+
+.activity-register-date {
+    color: #777;
+}
+
+.activity-stop-register,
+.activity-delete-register {
+    min-width: 40px;
+    padding: 3px;
+    background: #FFE0E0;
+    border: 1px solid #FF4848;
+    border-radius: 5px;
+}
+
+.activity-stop-register+.activity-delete-register {
+    display: none;
+}
