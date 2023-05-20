@@ -1,3 +1,10 @@
+:root {
+    --backgroundDark: red;
+    --backgroundLight: blue;
+    --accentDark: green;
+    --accentLight: cyan;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -20,11 +27,12 @@ body {
     width: 100vw;
     min-height: 100vh;
     padding: 10px;
-    background-color: var(--backgroundDark);
+    background: var(--background);
 }
 
 main {
     width: min(600px, 100%);
+    padding-bottom: 100px;
 }
 
 .action-bar {
@@ -50,7 +58,15 @@ main {
     width: 100%;
     height: 40px;
     padding: 10px;
-    border: 1px solid #777;
+    border: 1px solid var(--frame);
+    background: transparent;
+    color: var(--low-focus-text);
+}
+
+
+.action-bar input::placeholder {
+    color: var(--low-focus-text);
+    opacity: 80%;
 }
 
 .action-bar button {
@@ -58,20 +74,20 @@ main {
     height: 40px;
     padding: 10px;
     margin-bottom: 10px;
-    background: #0088ff;
-    color: #C6E5FF;
+    background: var(--accent-dark);
+    color: var(--background);
     /*border-radius: 5px;*/
     transition: .2s;
 }
 
 .action-bar button:hover {
-    background: #5FB4FF;
+    background: var(--accent-light);
 }
 
 .activity {
     width: 100%;
     padding: 10px;
-    border: 1px solid #666;
+    border: 1px solid var(--frame);
     border-radius: 10px;
 }
 
@@ -80,39 +96,114 @@ main {
 }
 
 .activity div {
-    color: #08f;
     display: flex;
     justify-content: space-between;
     margin-bottom: 5px;
 }
 
+.activity div p {
+    color: var(--activity-time-spent);
+}
+
 .activity-start-btn {
     display: block;
     padding: 3px;
-    color: #6FBA1A;
-    background: #E7FFCC;
-    border: 1px solid #6FBA1A;
+    color: var(--positive-dark);
+    background: var(--positive-light);
+    border: 1px solid var(--positive-dark);
     border-radius: 5px;
     transition: .2s;
 }
 
 .activity-start-btn:hover {
-    background: #F1FFE1;
+    color: var(--positive-light);
+    background: var(--positive-dark);
+    border: 1px solid var(--positive-light);
 }
 
 .activity-start-btn.disabled {
-    filter: saturate(0%);
+    filter: saturate(50%);
+    opacity: 50%;
 }
 
 .activity-title {
-    color: #333;
+    background: transparent;
+    color: var(--activity-title);
     font-size: 1.2rem;
+    line-break: none;
+}
+
+input.activity-title {
+    max-width: 60%;
+    padding: 4px;
+    border: 1px solid var(--frame);
+    border-radius: 5px;
+}
+
+input.activity-title::placeholder {
+    color: var(--low-focus-text);
+    opacity: 80%;
+}
+
+.activity-menu {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    border-radius: 5px;
+    color: var(--accent-light);
+    transition: .2s;
+}
+
+.activity-menu::after {
+    content: '•••';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.activity-menu div {
+    display: none;
+    position: absolute;
+    left: -190px;
+    top: 90%;
+    min-width: 200px;
+    background: var(--background);
+    color: var(--accent-dark);
+    border: 1px solid var(--accent-dark);
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.activity-menu:hover div {
+    display: block;
+}
+
+.activity-menu div button {
+    width: 100%;
+    height: 30px;
+    background: transparent;
+    color: var(--accent-dark)
+}
+
+.activity-menu div button:hover {
+    background: var(--accent-dark);
+    color: var(--background);
+}
+
+input.activity-title + .activity-menu:hover div {
+    display: none;
+}
+
+.activity-menu:hover {
+    color: var(--background);
+    background: var(--low-focus-text);
 }
 
 .activity-registers {
     min-height: 50px;
     list-style: none;
-    border: 1px solid #666;
+    border: 1px solid var(--frame);
     border-radius: 10px;
 }
 
@@ -124,28 +215,69 @@ main {
 }
 
 .activity-register-time {
+    position: relative;
     min-width: 50px;
     text-align: center;
     padding: 3px;
-    background: #C6E3FF;
-    color: #0088FF;
-    border: 1px solid #08f;
+    background: var(--accent-light);
+    color: var(--accent-dark);
+    border: 1px solid var(--accent-dark);
     border-radius: 5px;
+    white-space: nowrap;
+}
+
+.activity-register-time::after {
+    content: attr(data-content);
+    width: auto;
+    position: absolute;
+    top: 60%;
+    left: 60%;
+    padding: 3px;
+    background: var(--background);
+    color: var(--accent-dark);
+    border: 1px solid var(--accent-dark);
+    border-radius: 5px;
+    z-index: 1;
+    opacity: 0%;
+    transition: 0.5s;
+}
+
+.activity-register-time:hover::after {
+    opacity: 100%;
 }
 
 .activity-register-date {
-    color: #777;
+    color: var(--low-focus-text);
 }
 
 .activity-stop-register,
 .activity-delete-register {
     min-width: 40px;
     padding: 3px;
-    background: #FFE0E0;
-    border: 1px solid #FF4848;
+    color: var(--negative-dark);
+    background: var(--negative-light);
+    border: 1px solid var(--negative-dark);
     border-radius: 5px;
 }
 
 .activity-stop-register+.activity-delete-register {
     display: none;
+}
+
+.activity-delete-warning {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: var(--accent-);
+}
+
+#theme-btn {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 60px;
+    height: 60px;
+    background: var(--accent-dark);
+    border-radius: 50%;
 }

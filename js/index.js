@@ -1,6 +1,6 @@
 var updateHandlers = []
 const data = load()
-setInterval(save, 1000)
+setInterval(() => save(data), 1000)
 update()
 setupInterface()
 
@@ -14,7 +14,9 @@ function setupInterface() {
     const inpTitle = document.querySelector('#inp-title')
     const newBtn = document.querySelector('#new-btn')
     const exportBtn = document.querySelector('#export-btn')
-    
+    const activitiesContainer = document.querySelector('#activities-container')
+    const themeButton = document.querySelector('#theme-btn')
+
     newBtn.onclick = () => {
         if (inpTitle.value.trim().length == 0) return
 
@@ -23,36 +25,47 @@ function setupInterface() {
             registers: []
         }
         data.activities.push(activity)
-        main.appendChild(createActivity(activity))
+        const activityElement = createActivity(activity)
+        activitiesContainer.insertBefore(activityElement, activitiesContainer.firstChild)
 
         inpTitle.value = ""
     }
-    
+
     exportBtn.onclick = () => {
-        save()
+        save(data)
         window.location.href = "json.html"
     }
-    
-    for (let i in data.activities) {
-        main.appendChild(createActivity(data.activities[i]))
+
+    themeButton.onclick = () => {
+        applyPallete()
+    }
+
+    for (let i = data.activities.length - 1; i >= 0; i--) {
+        activitiesContainer.appendChild(createActivity(data.activities[i]))
     }
 }
 
 function createActivity(activityData) {
     const activity = document.createElement('div')
     activity.classList.add('activity')
-    const activityTitle = document.createElement('activityTitle')
+    const div0 = document.createElement('div')
+    activity.appendChild(div0);
+    const activityTitle = document.createElement('h1')
     activityTitle.classList.add("activity-title")
     activityTitle.innerText = activityData.title
-    activity.appendChild(activityTitle)
-    const div = document.createElement('div')
-    activity.appendChild(div)
+    div0.appendChild(activityTitle)
+    const activityMenu = document.createElement('span')
+    activityMenu.classList.add("activity-menu")
+    activityMenu.appendChild(createActivityMenu(activity, activityData))
+    div0.appendChild(activityMenu)
+    const div1 = document.createElement('div')
+    activity.appendChild(div1)
     const timeSpent = document.createElement('p')
-    div.appendChild(timeSpent)
+    div1.appendChild(timeSpent)
     const startActivity = document.createElement('button')
     startActivity.innerText = "Start activity"
     startActivity.classList.add('activity-start-btn')
-    div.appendChild(startActivity)
+    div1.appendChild(startActivity)
     const activityRegisters = document.createElement('ul')
     activityRegisters.classList.add('activity-registers')
     activity.appendChild(activityRegisters)
@@ -87,7 +100,7 @@ function createActivity(activityData) {
             }
         }
 
-        timeSpent.innerText = "Total time spent: " + timeFormat(time)
+        timeSpent.innerText = "Total time spent: " + fullTimeFormat(time)
 
         return false
     })
@@ -107,6 +120,71 @@ function createActivity(activityData) {
     }
 
     return activity
+}
+
+function createActivityMenu(activity, activityData) {
+    const menuDiv = document.createElement('div')
+
+    const option = (label, action) => {
+        const btn = document.createElement('button')
+        btn.innerText = label
+        btn.onclick = (e) => action(event, btn)
+        menuDiv.appendChild(btn)
+    }
+
+    option('Rename', (event, btn) => {
+        const title = activity.querySelector(".activity-title")
+        const titleInput = document.createElement('input')
+        titleInput.classList.add('activity-title')
+        titleInput.value = title.innerText
+        titleInput.setAttribute('placeholder', 'Activity name...')
+        title.replaceWith(titleInput)
+        titleInput.focus()
+
+
+        titleInput.addEventListener('focusout', () => {
+            if (titleInput.value.trim().length > 0) {
+                activityData.title = titleInput.value
+                title.innerText = titleInput.value
+            }
+            
+            titleInput.replaceWith(title)
+        })
+    })
+
+    option('Delete', (event, btn) => {
+        const cancel = document.createElement('div')
+        cancel.classList.add('activity')
+        const div = document.createElement('div')
+        const p = document.createElement('p')
+        p.classList.add('activity-delete-warning')
+        div.appendChild(p)
+        cancel.appendChild(div)
+        activity.replaceWith(cancel)
+
+        var cancelled = false
+        cancel.onclick = () => {
+            cancel.replaceWith(activity)
+            cancelled = true
+        }
+
+        const start = Date.now()
+        updateHandlers.push(() => {
+            const remainingTime = parseInt((Date.now() - start) / 1000)
+
+            p.innerText = 'Deleting in ' + (3 - remainingTime) + 's\nClick here to cancel'
+
+            if (cancelled) return true
+
+            if (remainingTime > 3) {
+                data.activities.splice(data.activities.indexOf(activityData), 1)
+                cancel.remove()
+                return true
+            }
+        })
+    })
+
+    return menuDiv
 }
 
 function createRegister(registers, register) {
@@ -129,15 +207,17 @@ function createRegister(registers, register) {
         activityStopRegister.onclick = () => {
             listItem.removeChild(activityStopRegister)
             register.end = Date.now()
-            save()
+            save(data)
         }
 
         updateHandlers.push(() => {
             activityRegisterTime.innerText = timeFormat(Date.now() - register.start)
+            activityRegisterTime.setAttribute('data-content', fullTimeFormat(Date.now() - register.start))
             return register.end != null
         })
     } else {
         activityRegisterTime.innerText = timeFormat(register.end - register.start)
+        activityRegisterTime.setAttribute('data-content', fullTimeFormat(register.end - register.start))
     }
 
     const activityDeleteRegister = document.createElement('button')
@@ -153,7 +233,7 @@ function createRegister(registers, register) {
         if (clicks <= 0) {
             registers.splice(registers.indexOf(register), 1)
             listItem.parentNode.removeChild(listItem)
-            save();
+            save(data);
         }
         setTimeout(() => {
             clicks = 3
@@ -191,16 +271,22 @@ function timeFormat(time) {
     return parseInt(time / 86400000) + "d"
 }
 
-function load() {
-    if (window.localStorage.data) {
-        return JSON.parse(window.localStorage.data)
-    } else {
-        return {
-            activities: []
-        }
-    }
+function fullTimeFormat(time) {
+    const s = parseInt(time / 1000 % 60)
+    const m = parseInt(time / 60000 % 60)
+    const h = parseInt(time / 3600000)
+
+    var str = ''
+    if (h > 0) str += h + 'h '
+    if (m > 0) str += m + 'm '
+    if (s > 0) str += s + 's '
+
+    return str.trim()
 }
 
-function save() {
-    window.localStorage.data = JSON.stringify(data)
-}
+
+
+
+/*
+"{\"activities\":[{\"title\":\"pointer\",\"registers\":[{\"start\":1684419684305,\"end\":1684426833696},{\"start\":1684429543050,\"end\":1684432122601},{\"start\":1684439925822,\"end\":1684446590865},{\"start\":1684491937996,\"end\":1684493024860},{\"start\":1684494230289,\"end\":null}]},{\"title\":\"Dormir\",\"registers\":[]},{\"title\":\"Tomar café \",\"registers\":[{\"start\":1684493020430,\"end\":1684494073768}]},{\"title\":\"Aula\",\"registers\":[{\"start\":1684426832124,\"end\":1684446595894}]},{\"title\":\"Teste\",\"registers\":[{\"start\":1684501845456,\"end\":null}]},{\"title\":\"teste\",\"registers\":[]}]}"
+*/

@@ -21,6 +21,7 @@ body {
     width: 100vw;
     min-height: 100vh;
     padding: 10px;
+    background: var(--background);
 }
 
 main {
@@ -30,7 +31,7 @@ main {
 main div {
     width: 100%;
     padding: 10px;
-    border: 1px solid #666;
+    border: 1px solid var(--frame);
     border-radius: 10px;
 }
 
@@ -39,20 +40,29 @@ main div + div {
 }
 
 main div h1 {
-    color: #333;
+    color: var(--accent-dark);
     font-size: 1.2rem;
 }
 
 main div p {
-    margin-block: 7px;
+    color: var(--accent-light);
+    margin-block: 10px;
 }
 
 main div input {
     display: none;
 }
 
-main div input + label {
+main div input + label, main div a {
+    display: block;
     padding: 3px;
-    background: #0088ff;
-    color: #C6E5FF;
+    background: var(--accent-dark);
+    color: var(--background);
+    text-decoration: none;
+    text-align: center;
+    border-radius: 3px;
+}
+
+main div input + label:hover, main div a:hover {
+    opacity: 60%;
 }

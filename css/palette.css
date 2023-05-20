@@ -1,6 +1,13 @@
 :root {
-    --backgroundDark: red;
-    --backgroundLight: blue;
-    --accentDark: green;
-    --accentLight: cyan;
+    --background: none;
+    --frame: none;
+    --low-focus-text: none;
+    --activity-title: none;
+    --activity-time-spent: none;
+    --positive-light: none;
+    --positive-dark: none;
+    --negative-light: none;
+    --negative-dark: none;
+    --accent-light: none;
+    --accent-dark: none;
 }

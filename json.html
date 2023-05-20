@@ -11,17 +11,25 @@
 <body>
     <main>
         <div>
-            <h1>Export</h1>
+            <h1>Export as json</h1>
             <p>Export your activity registers to backup anywhre you want!</p>
             <a id="download-link">Download json</a>
         </div>
         <div>
-            <h1>Import</h1>
-            <p>Import your activity registers from the export.json</p>
+            <h1>Import json file</h1>
+            <p>Import your activity registers from the export json file. It'll not override your current data, bud can duplicate then.</p>
+            <input id="import-inp" type="file">
+            <label for="import-inp">Import</label>
+        </div>
+        <div>
+            <h1>Erase all data</h1>
+            <p>It</p>
             <input id="import-inp" type="file">
             <label for="import-inp">Import</label>
         </div>
     </main>
+    <script src="js/data.js"></script>
+    <script src="js/palette.js"></script>
     <script src="js/json.js"></script>
 </body>
 
