@@ -11,24 +11,35 @@ function update() {
 
 function setupInterface() {
     const main = document.querySelector('main')
-    const inpTitle = document.querySelector('#inp-title')
+    const actionbarInp = document.querySelector('#actionbar-inp')
     const newBtn = document.querySelector('#new-btn')
     const exportBtn = document.querySelector('#export-btn')
     const activitiesContainer = document.querySelector('#activities-container')
     const themeButton = document.querySelector('#theme-btn')
 
+    actionbarInp.addEventListener('input', () => {
+        for (let i = 0; i < activitiesContainer.children.length; i++) {
+            const child = activitiesContainer.children[i]
+            if (child.getTitle().toLowerCase().indexOf(actionbarInp.value.toLowerCase()) >= 0) {
+                child.classList.remove('hidden')
+            } else {
+                child.classList.add('hidden')
+            }
+        }
+    })
+
     newBtn.onclick = () => {
-        if (inpTitle.value.trim().length == 0) return
+        if (actionbarInp.value.trim().length == 0) return
 
         const activity = {
-            title: inpTitle.value,
+            title: actionbarInp.value,
             registers: []
         }
         data.activities.push(activity)
         const activityElement = createActivity(activity)
         activitiesContainer.insertBefore(activityElement, activitiesContainer.firstChild)
 
-        inpTitle.value = ""
+        actionbarInp.value = ""
     }
 
     exportBtn.onclick = () => {
@@ -55,6 +66,7 @@ function createActivity(activityData) {
     activityTitle.innerText = activityData.title
     div0.appendChild(activityTitle)
     const activityMenu = document.createElement('span')
+    activityMenu.classList.add("menu")
     activityMenu.classList.add("activity-menu")
     activityMenu.appendChild(createActivityMenu(activity, activityData))
     div0.appendChild(activityMenu)
@@ -117,6 +129,10 @@ function createActivity(activityData) {
 
         const r = createRegister(activityData.registers, register)
         addRegister(r)
+    }
+    
+    activity.getTitle = () => {
+        return activityData.title
     }
 
     return activity
