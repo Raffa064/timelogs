@@ -58,7 +58,8 @@ function setupInterface() {
     }
 
     themeButton.onclick = () => {
-        applyPallete()
+        save(data)
+        window.location.href = "theme.html"
     }
 
     data.activities.forEach((activityData) => {
@@ -69,7 +70,7 @@ function setupInterface() {
 
 function createActivityNode(activityData) {
     const activityNode = document.createElement('div')
-    activityNode.classList.add('activity')
+    activityNode.classList.add('activity', 'frame-div')
 
     const topContainer = document.createElement('div')
     activityNode.appendChild(topContainer);

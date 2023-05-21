@@ -1,0 +1,26 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font-family: Arial, Helvetica, sans-serif;
+    -ms-touch-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+    transition: .2s;
+}
+
+.frame-div {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--frame);
+    border-radius: 10px;
+}
+
+* + .frame-div {
+    margin-top: 10px;
+}

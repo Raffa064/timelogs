@@ -1,0 +1,105 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--background);
+}
+
+main {
+    width: min(600px, 100%);
+}
+
+main > .frame-div {
+    width: 100%;
+}
+
+h1 {
+    font-size: 1.2rem;
+    color: var(--accent-dark);
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"] + label {
+    color: var(--low-focus-text);
+}
+
+
+input[type="checkbox"]:checked + label {
+    color: var(--accent-dark);
+}
+
+input[type="checkbox"] + label::before {
+    content: '';
+    display: inline-block;
+    width: 1ch;
+    height: 1ch;
+    margin-right: 10px;
+    background: var(--background);
+    border: 1px solid var(--accent-light);
+    border-radius: 2px;
+}
+
+input[type="checkbox"]:checked + label::before {
+    background: var(--negative-dark);
+}
+
+label {
+    display: block;
+    color: var(--low-focus-text);
+}
+
+label + input {
+    margin-top: 5px;
+}
+
+input[type="range"] {
+    appearance: none;
+    display: block;
+    width: 100%;
+    padding: 4px;
+    background: transparent;
+    border: 1px solid var(--frame);
+    border-radius: 5px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    border-radius: 50%;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--accent-dark);
+}
+
+button, a {
+    width: 100%;
+    display: block;
+    padding: 5px;
+    margin-top: 10px;
+    text-align: center;
+    color: var(--background);
+    border-radius: 3px;
+}
+
+button {
+    background: var(--negative-light);
+}
+
+button:hover {
+    background: var(--negative-dark);
+}
+
+a {
+    background: var(--accent-dark);
+    text-decoration: none;
+}
+
+a:hover {
+    background: var(--accent-light);
+}
+

@@ -1,9 +1,33 @@
-applyPallete()
+handlePaletteUpdate()
 
-function applyPallete(shift, hue, dark) {
-    const pallete = createPallete(shift, hue, dark)
-    // pallete.forEach(c => {document.querySelector('main').innerHTML += ('<span style="background: ' + c.hsl() + '; color: transparent; padding: 2px;">®</sparent>')})
+function loadTheme() {
+    const theme = window.localStorage.theme
 
+    if (theme) {
+        return JSON.parse(theme)
+    }
+
+    return {
+        shift: 45,
+        hue: 180,
+        dark: false,
+    }
+}
+
+function saveTheme(theme) {
+    if (theme) {
+        window.localStorage.theme = JSON.stringify(theme)
+    }
+}
+
+function handlePaletteUpdate() {
+    const { shift, hue, dark } = loadTheme()
+    applyPalette(shift, hue, dark)
+}
+
+function applyPalette(shift, hue, dark) {
+    const pallete = createPalette(shift, hue, dark)
+    
     const root = document.documentElement
     root.style.setProperty('--background', pallete[0].hsl())
     root.style.setProperty('--frame', pallete[1].hsl())
@@ -18,15 +42,15 @@ function applyPallete(shift, hue, dark) {
     root.style.setProperty('--accent-dark', pallete[3].hsl())
 }
 
-function createPallete(shift = 45, hue = parseInt(Math.random() * 360), dark = true) {
+function createPalette(shift = 45, hue = 180, dark = false) {
     const colors = []
     if (dark) {
         colors.push(createColor(hue, 4, 20))
         colors.push(createColor(hue, 20, 50))
-        
+
         colors.push(createColor(hue, 40, 40))
         colors.push(createColor(hue, 40, 58))
-        
+
         colors.push(createColor(hue + shift, 40, 40))
         colors.push(createColor(hue + shift, 40, 58))
     } else {

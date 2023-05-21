@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/globals.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <title>Theme editor</title>
+</head>
+
+<body>
+    <main>
+        <div class="frame-div">
+            <h1>Theme settings</h1>
+            <div class="frame-div">
+                <input id="dark-mode" type="checkbox"><label for="dark-mode">Enable dark mode</label>
+            </div>
+            <div class="frame-div">
+                <label>Theme color scheme:</label>
+                <input id="color-scheme" type="range" min="0" max="360">
+            </div>
+            <div class="frame-div">
+                <label>Hue shift:</label>
+                <input id="hue-shift" type="range" min="0" max="360">
+            </div>
+            <button id="reset-btn">Reset to default</button>
+            <a href="index.html" rel="prev">Go home</a>
+        </div>
+    </main>
+
+    <script src="js/palette.js"></script>
+    <script>
+        const theme = loadTheme()
+        
+        const darkMode = document.querySelector('#dark-mode')
+        const colorScheme = document.querySelector('#color-scheme')
+        const hueShift = document.querySelector('#hue-shift')
+        const reset = document.querySelector('#reset-btn')
+        
+        darkMode.checked = theme.dark
+        hueShift.value = theme.shift
+        colorScheme.value = theme.hue
+        
+        darkMode.addEventListener('change', (e) => {
+            theme.dark = darkMode.checked
+            saveTheme(theme)
+            handlePaletteUpdate()
+        })
+        
+        colorScheme.addEventListener('input', (e) => {
+            theme.hue = colorScheme.value
+            saveTheme(theme)
+            handlePaletteUpdate()
+        })
+        
+        hueShift.addEventListener('input', (e) => {
+            theme.shift = hueShift.value
+            saveTheme(theme)
+            handlePaletteUpdate()
+        })
+        
+        reset.onclick = () => {
+            theme.shift = 45
+            theme.hue = 180
+            theme.dark = false
+            
+            darkMode.checked = theme.dark
+            hueShift.value = theme.shift
+            colorScheme.value = theme.hue
+            
+            saveTheme(theme)
+            handlePaletteUpdate()
+        }
+    </script>
+</body>
+
+</html>

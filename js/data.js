@@ -3,15 +3,14 @@ function load() {
     if (data) {
         return JSON.parse(data)
     }
-    
+
     return {
         activities: []
     }
-
 }
 
 function save(data) {
-    if (data == undefined) return
-    window.localStorage.data = JSON.stringify(data)
+    if (data) {
+        window.localStorage.data = JSON.stringify(data)
+    }
 }
-
