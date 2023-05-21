@@ -194,7 +194,7 @@ function createActivityMenuNode(activityNode, activityData) {
 
     option('Delete', (event, btn) => {
         const cancel = document.createElement('div')
-        cancel.classList.add('activity')
+        cancel.classList.add('activity', 'frame-div')
         const div = document.createElement('div')
         const p = document.createElement('p')
         p.classList.add('activity-delete-warning')
