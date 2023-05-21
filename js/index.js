@@ -78,6 +78,14 @@ function createActivity(activityData) {
     startActivity.innerText = "Start activity"
     startActivity.classList.add('activity-start-btn')
     div1.appendChild(startActivity)
+    const activityFoldRegisters = document.createElement('input')
+    activityFoldRegisters.classList.add('activity-fold-registers')
+    activityFoldRegisters.type = 'checkbox'
+    activityFoldRegisters.id = 'fold-'+activityData.title+'-'+parseInt(Math.random()*9999)
+    activity.append(activityFoldRegisters)
+    const activityFoldRegistersLabel = document.createElement('label')
+    activityFoldRegistersLabel.htmlFor = activityFoldRegisters.id
+    activity.append(activityFoldRegistersLabel)
     const activityRegisters = document.createElement('ul')
     activityRegisters.classList.add('activity-registers')
     activity.appendChild(activityRegisters)

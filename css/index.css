@@ -205,18 +205,48 @@ input.activity-title + .activity-menu:hover div {
     display: none;
 }
 
+.activity-fold-registers  {
+    display: none;
+}
+
+.activity-fold-registers + label {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    color: var(--low-focus-text);
+    border: 1px solid var(--frame);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: none;
+}
+
+.activity-fold-registers + label::after {
+    content: '\\/';
+}
+
+.activity-fold-registers:checked + label::after {
+    content: '/\\';    
+}
+
 .activity-registers {
-    min-height: 50px;
+    min-height: 10px;
     list-style: none;
     border: 1px solid var(--frame);
-    border-radius: 10px;
+    border-top: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .activity-registers li {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
+}
+
+.activity-fold-registers:checked + label + .activity-registers li {
+    display: flex;
 }
 
 .activity-register-time {
