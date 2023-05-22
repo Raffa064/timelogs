@@ -344,6 +344,7 @@ function fullTimeFormat(time) {
     if (h > 0) str += h + 'h '
     if (m > 0) str += m + 'm '
     if (s > 0) str += s + 's '
+    if (time < 1000) str = "0s"
 
     return str.trim()
 }

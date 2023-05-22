@@ -12,10 +12,6 @@ main {
     width: min(600px, 100%);
 }
 
-+ div {
-    margin-top: 10px;
-}
-
 h1 {
     color: var(--accent-dark);
     font-size: 1.2rem;
@@ -33,6 +29,7 @@ input {
 input + label, a, main a {
     display: block;
     padding: 3px;
+    margin-top: 5px;
     background: var(--accent-dark);
     color: var(--background);
     text-decoration: none;
@@ -45,5 +42,7 @@ input + label:hover, a:hover {
 }
 
 main > a {
+    max-width: 300px;
     margin-top: 10px;
+    margin-inline: auto;
 }

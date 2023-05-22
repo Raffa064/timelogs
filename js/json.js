@@ -1,9 +1,12 @@
 const downloadLink = document.querySelector('#download-link')
 const json = JSON.stringify(window.localStorage.data)
-const blob = new Blob([json], { type: 'application/json' })
+const blob = new Blob([json], { type: 'application/json' }) 
 const url = URL.createObjectURL(blob)
 downloadLink.href = url
-downloadLink.download = "timelog-export-" + (Date.now() / 1000) + ".json"
+downloadLink.download = "timelog-export.json"
+
+const rawLink = document.querySelector('#raw-link')
+rawLink.href = url
 
 const importInp = document.querySelector('#import-inp')
 importInp.addEventListener('change', (event) => {
