@@ -41,6 +41,8 @@ function setupInterface() {
 
         const activityData = {
             title: name,
+            id: randomId(),
+            lastModified: Date.now(),
             registers: []
         }
 
@@ -153,6 +155,7 @@ function createActivityNode(activityData) {
             end: null
         }
         activityData.registers.push(registerData)
+        activityData.lastModified = Date.now()
 
 
         const registerNode = createRegisterNode(activityData.registers, registerData)
@@ -185,6 +188,7 @@ function createActivityMenuNode(activityNode, activityData) {
         titleInput.addEventListener('focusout', () => {
             if (titleInput.value.trim().length > 0) {
                 activityData.title = titleInput.value
+                activityData.lastModified = Date.now()
                 title.innerText = titleInput.value
             }
 
@@ -248,6 +252,7 @@ function createRegisterNode(registers, registerData) {
         regStop.onclick = () => {
             regItem.removeChild(regStop)
             registerData.end = Date.now()
+            activityData.lastModified = Date.now()
             save(data)
         }
 
@@ -285,16 +290,6 @@ function createRegisterNode(registers, registerData) {
     }
 
     return regItem
-}
-
-function randomId() {
-    var id = ''
-    
-    for (let i = 0; i < 10; i++) {
-        id += String(parseInt(Math.random() * 9999).toString(16)).padStart('0', 4)
-    }
-    
-    return id
 }
 
 function registersDuration(registerData) {

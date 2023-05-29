@@ -13,7 +13,7 @@
     <main>
         <div class="frame-div">
             <h1>Export as json</h1>
-            <p>Export your activity registers to backup anywhre you want!</p>
+            <p>Export your activity registers to backup anywhere you want!</p>
             <a id="download-link">Download json</a>
             <a id="raw-link">View as raw</a>
         </div>
@@ -22,12 +22,12 @@
             <p>Import your activity registers from the export json file. It'll not override your current data, bud can duplicate then.</p>
             <input id="import-inp" type="file">
             <label for="import-inp">Import</label>
+            <button id="import-raw-btn">Import raw</button>
         </div>
         <div class="frame-div">
             <h1>Clear data</h1>
-            <p>WARNING: It'll wipe all your activities data.</p>
-            <input id="import-inp" type="file">
-            <label for="import-inp">Wipe data</label>
+            <p>WARNING: It'll wipe all your activities data if you exit from this session.</p>
+            <button class="negative" id="wipe-btn">Wipe data</button>
         </div>
         <a href="index.html">Go home</a>
     </main>

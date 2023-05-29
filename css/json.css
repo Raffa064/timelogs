@@ -22,19 +22,39 @@ p {
     margin-block: 10px;
 }
 
-input {
+input[type="file"], input[type="checkbox"] {
     display: none;
 }
 
-input + label, a, main a {
+input[type="text"] {
+    width: 100%;
+    padding: 4px;
+    margin-top: 10px;
+    background: transparent;
+    color: var(--accent-dark);
+    border: 1px solid var(--frame);
+    border-radius: 3px;
+}
+
+input[type="text"]::placeholder {
+    color: var(--low-focus-text);
+}
+
+input + label, a, main a, button {
+    width: 100%;
     display: block;
     padding: 3px;
     margin-top: 5px;
+    font-size: 1rem;
     background: var(--accent-dark);
     color: var(--background);
     text-decoration: none;
     text-align: center;
     border-radius: 3px;
+}
+
+button.negative {
+    background: var(--negative-dark);
 }
 
 input + label:hover, a:hover {
