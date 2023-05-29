@@ -24,3 +24,11 @@
 * + .frame-div {
     margin-top: 10px;
 }
+
+.pad-10 {
+    padding: 10px;
+}
+
+.text-center {
+    text-align: center;
+}

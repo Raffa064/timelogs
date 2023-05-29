@@ -265,7 +265,7 @@ input.activity-title + .activity-menu:hover div {
     white-space: nowrap;
 }
 
-.activity-register-time::after {
+.activity-register-time::after, .activity-delete-register::after {
     content: attr(data-content);
     width: auto;
     position: absolute;
@@ -281,12 +281,26 @@ input.activity-title + .activity-menu:hover div {
     transition: 0.5s;
 }
 
-.activity-register-time:hover::after {
+.activity-register-time:hover::after, .activity-delete-register:hover::after {
     opacity: 100%;
 }
 
 .activity-register-date {
     color: var(--low-focus-text);
+}
+
+.activity-delete-register {
+    position: relative;
+    white-space: nowrap;
+}
+
+.activity-delete-register::after {
+    left: 0;
+    transform: translateX(-90%);
+}
+
+.activity-delete-register[data-content=""]::after {
+    display: none;
 }
 
 .activity-stop-register,

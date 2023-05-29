@@ -29,7 +29,7 @@ function setupInterface() {
             }
         }
     }
-    
+
     actionbarInp.addEventListener('input', handleSearch)
 
     newBtn.onclick = () => {
@@ -233,7 +233,7 @@ function createActivityMenuNode(activityNode, activityData) {
 
 function createRegisterNode(activityData, registerData) {
     const registers = activityData.registers
-    
+
     const regItem = document.createElement('li')
 
     const regTime = document.createElement('span')
@@ -278,17 +278,28 @@ function createRegisterNode(activityData, registerData) {
     var clicks = 3
     regDelete.onclick = () => {
         clicks--;
-        regDelete.innerText = clicks
+        regDelete.setAttribute("data-content", "Click 3 times to delete")
 
         if (clicks <= 0) {
             registers.splice(registers.indexOf(registerData), 1)
-            regItem.parentNode.removeChild(regItem)
-            save(data);
+            
+            const div = document.createElement('div')
+            div.classList.add("pad-10", "text-center")
+            regItem.replaceWith(div)
+            const p = document.createElement('p')
+            p.innerText = "Regiter deleted"
+            div.appendChild(p)
+            
+            setTimeout(() => {
+                div.parentNode.removeChild(div)
+            }, 1200)
+            save(data)
+        } else {
+            setTimeout(() => {
+                clicks = 3
+                regDelete.setAttribute("data-content", "")
+            }, 800)
         }
-        setTimeout(() => {
-            clicks = 3
-            regDelete.innerText = '×'
-        }, 800)
     }
 
     return regItem
