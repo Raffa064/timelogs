@@ -24,11 +24,12 @@ importRawBtn.onclick = () => {
     const input = document.createElement("input")
     input.type = "text"
     input.setAttribute("placeholder", "Paste your json here")
-    input.onpaste = () => {
+    input.onpaste = (e) => {
         try {
-            importJSON(input.innerText)
+            importJSON(e.clipboardData.getData('text'))
             importRawBtn.innerText = "Success"
-        } catch {
+        } catch(error) {
+            console.log(error)
             importRawBtn.innerText = "Error"
         }
         
@@ -41,7 +42,6 @@ importRawBtn.onclick = () => {
 }
 
 function handleWipeLabelUpdate() {
-    console.log(window.sessionStorage.deleted)
     if (window.sessionStorage.deleted === undefined) {
         wipeBtn.innerText = "Wipe data"
     } else {
@@ -63,6 +63,8 @@ wipeBtn.onclick = () => {
 }
 
 function importJSON(jsonStr) {
+    console.log(jsonStr)
+    
     const json = JSON.parse(jsonStr)
     const data = load()
 
