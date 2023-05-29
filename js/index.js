@@ -126,7 +126,7 @@ function createActivityNode(activityData) {
     }
 
     activityData.registers.forEach((registerData) => {
-        const registerNode = createRegisterNode(activityData.registers, registerData)
+        const registerNode = createRegisterNode(activityData, registerData)
         addRegister(registerNode)
     })
 
@@ -158,7 +158,7 @@ function createActivityNode(activityData) {
         activityData.lastModified = Date.now()
 
 
-        const registerNode = createRegisterNode(activityData.registers, registerData)
+        const registerNode = createRegisterNode(activityData, registerData)
         addRegister(registerNode)
     }
 
@@ -231,7 +231,9 @@ function createActivityMenuNode(activityNode, activityData) {
     return menuDiv
 }
 
-function createRegisterNode(registers, registerData) {
+function createRegisterNode(activityData, registerData) {
+    const registers = activityData.registers
+    
     const regItem = document.createElement('li')
 
     const regTime = document.createElement('span')
